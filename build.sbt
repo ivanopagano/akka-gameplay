@@ -9,8 +9,10 @@ lazy val `akka-gameplay` =
     .settings(settings)
     .settings(
       libraryDependencies ++= Seq(
-        library.scalaCheck % Test,
-        library.utest      % Test
+        library.akkaCore,
+        library.akkaTestkit % Test,
+        library.scalaCheck  % Test,
+        library.utest       % Test
       )
     )
 
@@ -23,10 +25,15 @@ lazy val library =
     object Version {
       val scalaCheck = "1.13.5"
       val utest      = "0.6.3"
+      val akka       = "2.5.8"
     }
-    val scalaCheck = "org.scalacheck" %% "scalacheck" % Version.scalaCheck
-    val utest      = "com.lihaoyi"    %% "utest"      % Version.utest
+    val scalaCheck  = "org.scalacheck"    %% "scalacheck"   % Version.scalaCheck
+    val utest       = "com.lihaoyi"       %% "utest"        % Version.utest
+    val akkaCore    = "com.typesafe.akka" %% "akka-actor"   % Version.akka
+    val akkaTestkit = "com.typesafe.akka" %% "akka-testkit" % Version.akka
   }
+
+
 
 // *****************************************************************************
 // Settings
@@ -42,7 +49,7 @@ lazy val commonSettings =
     // scalaVersion from .travis.yml via sbt-travisci
     // scalaVersion := "2.12.4",
     organization := "default",
-    organizationName := "scalac",
+    organizationName := "gameplay",
     startYear := Some(2018),
     licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0")),
     scalacOptions ++= Seq(
