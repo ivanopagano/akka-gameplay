@@ -42,7 +42,7 @@ class Concierge extends Actor {
     case Broadcast(content) =>
       val senderName = sender.path.name
       val msg        = ClientChannel.EchoMessage(senderName, content)
-      context.children.filterNot(_ == sender).foreach(_ ! msg)
+      context.children.filterNot(_.path.name == sender.path.name).foreach(_ ! msg)
   }
 
 }
@@ -60,7 +60,8 @@ class ClientChannel(login: String, broadcast: ActorRef) extends Actor {
   import ClientChannel._
 
   def receive = {
-    case ClientMessage(content) => broadcast ! Concierge.Broadcast(content)
+    case ClientMessage(content)   => broadcast ! Concierge.Broadcast(content)
+    case EchoMessage(id, content) => println(s"$login / $id -> $content")
   }
 
 }
