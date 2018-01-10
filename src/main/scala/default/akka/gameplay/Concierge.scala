@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.test.gameplay
+package default.akka.gameplay
 
 import akka.actor.{ Actor, ActorRef, Props }
 
